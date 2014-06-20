@@ -1,4 +1,4 @@
-# Mackerel node.js client []
+# Mackerel node.js client [![Build Status](https://travis-ci.org/muddydixon/node-mackerel.svg?branch=master)](https://travis-ci.org/muddydixon/node-mackerel)
 
 This module is node.js client for [Mackerel.io](https://mackerel.io/)
 
