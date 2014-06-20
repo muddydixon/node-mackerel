@@ -1,18 +1,29 @@
 {
-  "name": "node-mackerel",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "mackerel",
+  "version": "0.0.1",
+  "description": "Mackerel.io node.js client",
+  "main": "lib/mackerel.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt test"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "muddydixon <muddydixon@gmail.com>",
+  "license": "Apache License Version 2.0",
   "dependencies": {
     "request": "^2.36.0",
     "deferred": "^0.7.1"
+  },
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "mocha": "^1.20.1",
+    "coffee-script": "^1.7.1",
+    "grunt-simple-mocha": "^0.4.0",
+    "grunt-contrib-coffee": "^0.10.1",
+    "grunt-cli": "^0.1.13",
+    "grunt": "^0.4.5",
+    "sinon": "^1.10.2",
+    "blanket": "^1.1.6"
   }
 }
