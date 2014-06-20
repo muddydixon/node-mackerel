@@ -16,13 +16,13 @@ Get Api Key by "Detail" page via [dashboard](https://mackerel.io/my/dashboard)
 Mackerel = require "mackerel"
 mackerel = new Mackerel("your api key")
 
-# use deferred
+# use Promise
 mackerel.getHosts()
 .then(({res, body})->
   console.log body.hosts # hosts info array
 )
 
-# or call back function
+# or callback function
 mackerel.getHosts((err, res, body)->
   console.log body.hosts # hosts info array
 )
