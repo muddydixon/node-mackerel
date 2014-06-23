@@ -11,7 +11,7 @@ describe "Mackerel", ->
     it "throw Error", ->
       expect(->
         new Mackerel()
-      ).throw Mackerel::NoApiKeyError
+      ).throw Mackerel.NoApiKeyError
 
     it "return Mackerel", ->
       expect(new Mackerel("my key")).to.be.an.instanceof Mackerel
@@ -31,7 +31,7 @@ describe "Mackerel", ->
         done new Error("should throw error")
       )
       .catch((err)->
-        expect(err).to.be.an.instanceof Mackerel::AuthenticationError
+        expect(err).to.be.an.instanceof Mackerel.AuthenticationError
         done()
       )
 
@@ -58,7 +58,7 @@ describe "Mackerel", ->
       it "throw error withou host data", (done)->
         mackerel.addHost()
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::NoDataError
+          expect(err).to.be.an.instanceof Mackerel.NoDataError
           done()
         )
 
@@ -70,7 +70,7 @@ describe "Mackerel", ->
           done(new Error("should throw error"))
         )
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::ApiError
+          expect(err).to.be.an.instanceof Mackerel.ApiError
           done()
         )
 
@@ -82,7 +82,7 @@ describe "Mackerel", ->
           done(new Error("should throw error"))
         )
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::ApiError
+          expect(err).to.be.an.instanceof Mackerel.ApiError
           done()
         )
 
@@ -99,7 +99,7 @@ describe "Mackerel", ->
       it "throw error without id", (done)->
         mackerel.getHostInfo()
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::NoIdError
+          expect(err).to.be.an.instanceof Mackerel.NoIdError
           done()
         )
 
@@ -111,7 +111,7 @@ describe "Mackerel", ->
           done(new Error("should throw error"))
         )
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::ApiError
+          expect(err).to.be.an.instanceof Mackerel.ApiError
           done()
         )
 
@@ -128,14 +128,14 @@ describe "Mackerel", ->
       it "throw error without id", (done)->
         mackerel.updateHostInfo()
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::NoIdError
+          expect(err).to.be.an.instanceof Mackerel.NoIdError
           done()
         )
 
       it "throw error without data", (done)->
         mackerel.updateHostInfo("my-host")
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::NoDataError
+          expect(err).to.be.an.instanceof Mackerel.NoDataError
           done()
         )
 
@@ -147,7 +147,7 @@ describe "Mackerel", ->
           done(new Error("should throw error"))
         )
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::ApiError
+          expect(err).to.be.an.instanceof Mackerel.ApiError
           done()
         )
 
@@ -159,7 +159,7 @@ describe "Mackerel", ->
           done(new Error("should throw error"))
         )
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::ApiError
+          expect(err).to.be.an.instanceof Mackerel.ApiError
           done()
         )
 
@@ -171,7 +171,7 @@ describe "Mackerel", ->
           done(new Error("should throw error"))
         )
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::ApiError
+          expect(err).to.be.an.instanceof Mackerel.ApiError
           done()
         )
 
@@ -188,14 +188,14 @@ describe "Mackerel", ->
       it "throw error without id", (done)->
         mackerel.changeHostStatus()
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::NoIdError
+          expect(err).to.be.an.instanceof Mackerel.NoIdError
           done()
         )
 
       it "throw error invalid status", (done)->
         mackerel.changeHostStatus("my-host", "excite")
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::InvalidStatusError
+          expect(err).to.be.an.instanceof Mackerel.InvalidStatusError
           done()
         )
 
@@ -207,7 +207,7 @@ describe "Mackerel", ->
           done(new Error("should throw error"))
         )
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::ApiError
+          expect(err).to.be.an.instanceof Mackerel.ApiError
           done()
         )
 
@@ -224,7 +224,7 @@ describe "Mackerel", ->
       it "throw error without id", (done)->
         mackerel.retireHost()
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::NoIdError
+          expect(err).to.be.an.instanceof Mackerel.NoIdError
           done()
         )
 
@@ -236,7 +236,7 @@ describe "Mackerel", ->
           done(new Error("should throw error"))
         )
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::ApiError
+          expect(err).to.be.an.instanceof Mackerel.ApiError
           done()
         )
 
@@ -260,6 +260,6 @@ describe "Mackerel", ->
       it "throw error witout data", (done)->
         mackerel.postMetric()
         .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel::NoDataError
+          expect(err).to.be.an.instanceof Mackerel.NoDataError
           done()
         )

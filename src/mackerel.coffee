@@ -7,7 +7,7 @@ module.exports = class Mackerel
   @origin: "https://mackerel.io"
   @statuses: ["standby", "working", "maintenance", "retuired"]
   constructor: (@apikey, @option = {})->
-    throw new Mackerel::NoApiKeyError unless @apikey
+    throw new Mackerel.NoApiKeyError unless @apikey
 
     @origin   = @option.mackerelOrigin or Mackerel.origin
     @version  = @option.version or "v0"
@@ -27,8 +27,8 @@ module.exports = class Mackerel
 
     d = Mackerel.request(opt)
     .then(({res, body})=>
-      throw new Mackerel::AuthenticationError(body.error) if res.statusCode is 401
-      throw new Mackerel::ApiError(body) if res.statusCode >= 400
+      throw new Mackerel.AuthenticationError(body.error) if res.statusCode is 401
+      throw new Mackerel.ApiError(body) if res.statusCode >= 400
       body = JSON.parse body
       {res, body}
     )
@@ -44,29 +44,29 @@ module.exports = class Mackerel
     @api("/hosts.json", "GET", cb)
 
   addHost: (data, cb)->
-    return deferred(new Mackerel::NoDataError("addHost")) unless data
+    return deferred(new Mackerel.NoDataError("addHost")) unless data
     @api("/hosts", "POST", data, cb)
 
   getHostInfo: (id, cb)->
-    return deferred(new Mackerel::NoIdError("getHostInfo")) unless id
+    return deferred(new Mackerel.NoIdError("getHostInfo")) unless id
     @api("/hosts/#{id}", "GET", cb)
 
   updateHostInfo: (id, data, cb)->
-    return deferred(new Mackerel::NoIdError("updateHostInfo")) unless id
-    return deferred(new Mackerel::NoDataError("updateHostInfo")) unless data
+    return deferred(new Mackerel.NoIdError("updateHostInfo")) unless id
+    return deferred(new Mackerel.NoDataError("updateHostInfo")) unless data
     @api("/hosts/#{id}", "PUT", data, cb)
 
   changeHostStatus: (id, status, cb)->
-    return deferred(new Mackerel::NoIdError("changeHostStatus")) unless id
-    return deferred(new Mackerel::InvalidStatusError(status)) if Mackerel.statuses.indexOf(status) is -1
+    return deferred(new Mackerel.NoIdError("changeHostStatus")) unless id
+    return deferred(new Mackerel.InvalidStatusError(status)) if Mackerel.statuses.indexOf(status) is -1
     @api("/hosts/#{id}/status", "POST", {status: status}, cb)
 
   retireHost: (id, cb)->
-    return deferred(new Mackerel::NoIdError("retireHost")) unless id
+    return deferred(new Mackerel.NoIdError("retireHost")) unless id
     @api("/hosts/#{id}/retire", "POST", {}, cb)
 
   postMetric: (data, cb)->
-    return deferred(new Mackerel::NoDataError("postMetric")) unless data
+    return deferred(new Mackerel.NoDataError("postMetric")) unless data
     @api("/tsdb", "POST", data, cb)
 
   #
@@ -83,32 +83,32 @@ module.exports = class Mackerel
 
     d.promise
 
-class Mackerel::ApiError extends Error
+class Mackerel.ApiError extends Error
   constructor: (obj)->
     @message = JSON.stringify(obj)
     super(@message)
 
-class Mackerel::NoApiKeyError extends Error
+class Mackerel.NoApiKeyError extends Error
   constructor: (msg)->
     @message = "api key required" + (msg? and msg or "")
     super(@message)
 
-class Mackerel::AuthenticationError extends Error
+class Mackerel.AuthenticationError extends Error
   constructor: (msg)->
     @message = "authentication failed" + (msg? and msg or "")
     super(@message)
 
-class Mackerel::NoDataError extends Error
+class Mackerel.NoDataError extends Error
   constructor: (api)->
     @message = "api `#{api}` requires `data`"
     super(@message)
 
-class Mackerel::NoIdError extends Error
+class Mackerel.NoIdError extends Error
   constructor: (api)->
     @message = "api `#{api}` requires `id`"
     super(@message)
 
-class Mackerel::InvalidStatusError extends Error
+class Mackerel.InvalidStatusError extends Error
   constructor: (status)->
     @message = "`#{status}` is invalid"
     super(@message)
