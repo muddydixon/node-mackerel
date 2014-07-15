@@ -70,6 +70,11 @@ module.exports = class Mackerel
     return deferred(new Mackerel.NoArrayDataError("postMetric")) unless data instanceof Array
     @api("/tsdb", "POST", data, cb)
 
+  postServiceMetric: (service, data, cb)->
+    return deferred(new Mackerel.NoDataError("postServiceMetric")) unless data
+    return deferred(new Mackerel.NoArrayDataError("postServiceMetric")) unless data instanceof Array
+    @api("/services/#{service}/tsdb", "POST", data, cb)
+
   #
   # ## deferred request
   #
