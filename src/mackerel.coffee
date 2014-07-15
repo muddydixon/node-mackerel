@@ -67,7 +67,13 @@ module.exports = class Mackerel
 
   postMetric: (data, cb)->
     return deferred(new Mackerel.NoDataError("postMetric")) unless data
+    return deferred(new Mackerel.NoArrayDataError("postMetric")) unless data instanceof Array
     @api("/tsdb", "POST", data, cb)
+
+  postServiceMetric: (service, data, cb)->
+    return deferred(new Mackerel.NoDataError("postServiceMetric")) unless data
+    return deferred(new Mackerel.NoArrayDataError("postServiceMetric")) unless data instanceof Array
+    @api("/services/#{service}/tsdb", "POST", data, cb)
 
   #
   # ## deferred request
@@ -101,6 +107,11 @@ class Mackerel.AuthenticationError extends Error
 class Mackerel.NoDataError extends Error
   constructor: (api)->
     @message = "api `#{api}` requires `data`"
+    super(@message)
+
+class Mackerel.NoArrayDataError extends Error
+  constructor: (api)->
+    @message = "api `#{api}` requires Array `data`"
     super(@message)
 
 class Mackerel.NoIdError extends Error

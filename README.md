@@ -37,6 +37,13 @@ mackerel.getHosts((err, res, body)->
 * `changeHostStatus(id, status[, callback])`
 * `retireHost(id[, callback])`
 * `postMetric(data[, callback])`
+* `postServiceMetric(service, data[, callback])`
+
+See detail: [mackerel api specification](http://help-ja.mackerel.io/entry/spec/api/v0)
+
+## TODOs
+
+* stream post metric
 
 ## Author
 

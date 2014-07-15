@@ -263,3 +263,29 @@ describe "Mackerel", ->
           expect(err).to.be.an.instanceof Mackerel.NoDataError
           done()
         )
+
+    describe "postServiceMetric", ->
+      mackerel = new Mackerel("my key")
+      now = Date.now()
+      data = [0...10].map (id)->
+        name: "my-metric.value"
+        time: 0|(new Date(now + id * 60 * 1000).getTime() / 1000)
+        value: 0|Math.random() * 100
+
+      it "return JSON `{}`", (done)->
+        request.returns(deferred({res: {statusCode: 200}, body: JSON.stringify({success: true})}))
+
+        mackerel.postServiceMetric("myservice", data)
+        .then(({res, body})->
+          expect(body).to.have.property "success", true
+          done()
+        )
+        .catch(done)
+
+      it "throw error witout data", (done)->
+        mackerel.postServiceMetric()
+        .catch((err)->
+          expect(err).to.be.an.instanceof Mackerel.NoDataError
+          done()
+        )
+        .catch(done)
