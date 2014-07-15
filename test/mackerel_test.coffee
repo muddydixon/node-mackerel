@@ -274,15 +274,18 @@ describe "Mackerel", ->
 
       it "return JSON `{}`", (done)->
         request.returns(deferred({res: {statusCode: 200}, body: JSON.stringify({success: true})}))
-        mackerel.postMetric("myservice", data)
+
+        mackerel.postServiceMetric("myservice", data)
         .then(({res, body})->
           expect(body).to.have.property "success", true
           done()
         )
+        .catch(done)
 
       it "throw error witout data", (done)->
-        mackerel.postMetric()
+        mackerel.postServiceMetric()
         .catch((err)->
           expect(err).to.be.an.instanceof Mackerel.NoDataError
           done()
         )
+        .catch(done)
