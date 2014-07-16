@@ -21,7 +21,7 @@ describe "Mackerel", ->
     before ->
       request = sinon.stub(Mackerel, "request")
     after ->
-      delete require.cache["request"]
+      request.restore()
 
     it "throw authentication failed for invalid api key", (done)->
       mackerel = new Mackerel("my key")
@@ -41,6 +41,13 @@ describe "Mackerel", ->
         request.returns(deferred({res: {statusCode: 200}, body: JSON.stringify({ hosts: [] })}))
         mackerel.getHosts()
         .then(({res, body})->
+          expect(body).to.have.property "hosts"
+          done()
+        )
+
+      it "return JSON with `hosts` given callback", (done)->
+        request.returns(deferred({res: {statusCode: 200}, body: JSON.stringify({ hosts: [] })}))
+        mackerel.getHosts((err, res, body)->
           expect(body).to.have.property "hosts"
           done()
         )
@@ -90,7 +97,7 @@ describe "Mackerel", ->
       mackerel = new Mackerel("my key")
       it "return JSON with `host`", (done)->
         request.returns(deferred({res: {statusCode: 200}, body: JSON.stringify({ host: {} })}))
-        mackerel.getHosts("my-host")
+        mackerel.getHostInfo("my-host")
         .then(({res, body})->
           expect(body).to.have.property "host"
           done()
@@ -249,18 +256,25 @@ describe "Mackerel", ->
         time: 0|(new Date(now + id * 60 * 1000).getTime() / 1000)
         value: 0|Math.random() * 100
 
+      it "throw error witout data", (done)->
+        mackerel.postMetric()
+        .catch((err)->
+          expect(err).to.be.an.instanceof Mackerel.NoDataError
+          done()
+        )
+
+      it "throw error given not array data", (done)->
+        mackerel.postMetric({host: "localhost"}, data[0])
+        .catch((err)->
+          expect(err).to.be.an.instanceof Mackerel.NoArrayDataError
+          done()
+        )
+
       it "return JSON `{}`", (done)->
         request.returns(deferred({res: {statusCode: 200}, body: JSON.stringify({success: true})}))
         mackerel.postMetric(data)
         .then(({res, body})->
           expect(body).to.have.property "success", true
-          done()
-        )
-
-      it "throw error witout data", (done)->
-        mackerel.postMetric()
-        .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel.NoDataError
           done()
         )
 
@@ -272,20 +286,27 @@ describe "Mackerel", ->
         time: 0|(new Date(now + id * 60 * 1000).getTime() / 1000)
         value: 0|Math.random() * 100
 
+      it "throw error witout data", (done)->
+        mackerel.postServiceMetric()
+        .catch((err)->
+          expect(err).to.be.an.instanceof Mackerel.NoDataError
+          done()
+        )
+        .catch(done)
+
+      it "throw error given not array data", (done)->
+        mackerel.postServiceMetric("myservice", {host: "localhost"}, data[0])
+        .catch((err)->
+          expect(err).to.be.an.instanceof Mackerel.NoArrayDataError
+          done()
+        )
+
       it "return JSON `{}`", (done)->
         request.returns(deferred({res: {statusCode: 200}, body: JSON.stringify({success: true})}))
 
         mackerel.postServiceMetric("myservice", data)
         .then(({res, body})->
           expect(body).to.have.property "success", true
-          done()
-        )
-        .catch(done)
-
-      it "throw error witout data", (done)->
-        mackerel.postServiceMetric()
-        .catch((err)->
-          expect(err).to.be.an.instanceof Mackerel.NoDataError
           done()
         )
         .catch(done)
