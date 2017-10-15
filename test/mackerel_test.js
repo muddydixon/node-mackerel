@@ -18,11 +18,11 @@ describe("Mackerel", ()=>{
     });
     it("should return mackerel with default value", ()=>{
       const mackerel = new Mackerel(APIKEY);
-      assert.ok(mackerel.origin === "https://mackerel.io");
+      assert.ok(mackerel.origin === "https://api.mackerelio.com");
       assert.ok(mackerel.version === "v0");
     });
     it("should return specified mackerel with opt", ()=>{
-      const origin = "https://mymackerel.io";
+      const origin = "https://api.mackerelio.com";
       const version = "myversion";
       const mackerel = new Mackerel(APIKEY, {origin, version});
       assert.ok(mackerel.origin === origin);
