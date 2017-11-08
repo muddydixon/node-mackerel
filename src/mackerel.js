@@ -3,7 +3,7 @@ const qs = require("querystring");
 const request = require("request");
 const createError = require("create-error");
 
-const ORIGIN: string = "https://mackerel.io";
+const ORIGIN: string = "https://api.mackerelio.com";
 const VERSION: string = "v0";
 const GET: string = "GET", POST: string = "POST", PUT: string = "PUT", DELETE: string = "DELETE";
 
