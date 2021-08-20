@@ -26,7 +26,7 @@ type RequestOption = {
   url: string;
   proxy?: ?string;
   headers: Object;
-  form: ?string;
+  body: ?string;
 };
 
 type ResolveArgs = {
@@ -214,10 +214,10 @@ class Mackerel {
 			url: `${this.endpoint}${path}`,
 			headers: {
 				"X-Api-Key": this.apikey,
-				contentType: "application/json",
+				"Content-Type": "application/json",
 				accepts: "application/json"
 			},
-      form: null
+      body: null
 		};
     if(this.proxy) opt.proxy = this.proxy;
 
@@ -225,7 +225,7 @@ class Mackerel {
     if([GET, DELETE].indexOf(method) > -1){
       opt.url = `${opt.url}?${reqData}`;
     }else if([POST, PUT].indexOf(method) > -1){
-      opt.form = reqData;
+      opt.body = reqData;
     }
 
 		return new Promise((resolve: Function, reject: Function)=>{
