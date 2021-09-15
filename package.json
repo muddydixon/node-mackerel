@@ -20,7 +20,8 @@
     "intelli-espower-loader": "^1.0.1",
     "js-yaml": "^3.8.4",
     "power-assert": "^1.4.3",
-    "request": "^2.81.0"
+    "request": "^2.88.2",
+    "yarn": "^1.22.11"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
